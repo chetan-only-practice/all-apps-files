@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: mysql:latest
+    image: chetanbdocker/mysql:latest
     container_name: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=Test@123
@@ -17,7 +17,7 @@ services:
       start_period: 30s
 
   mainapp:
-    image: bank-app
+    image: chetanbdocker/spring-boot-bank-app-v1:latest
     container_name: Bankapp
     environment:
       - SPRING_DATASOURCE_USERNAME=root
