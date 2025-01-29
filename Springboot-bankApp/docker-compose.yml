@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: chetanbdocker/mysql:latest
+    image: mysql:latest
     container_name: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=Test@123
@@ -17,7 +17,7 @@ services:
       start_period: 30s
 
   mainapp:
-    image: chetanbdocker/spring-boot-bank-app-v1:latest
+    image: multi-stage-bank
     container_name: Bankapp
     environment:
       - SPRING_DATASOURCE_USERNAME=root
@@ -32,14 +32,15 @@ services:
       - bankapp
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
+      test: ["CMD", "sh", "-c", "nc -z localhost 8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
 
 networks:
   bankapp:
 
 volumes:
-    bankapp-volume:
+  bankapp-volume:
+
